@@ -1,11 +1,14 @@
-from bs4 import BeautifulSoup as bs
-import requests
+from bs4 import BeautifulSoup as bs #library for reading and parsing the html content
+import requests # requests module to get website
 
-
+# start of the method here
 def get_canonical_url(url):
     page = requests.get(url)
-    soup = bs(page.content, 'html.parser')
+    # the html along with some other stuff is loaded in to the page variable
+    soup = bs(page.content, 'html.parser') # here we extract only html content, removing unnecessary things downloaded from the requests
     for a in soup.find_all('link', href=True,rel='canonical'):
+        #here we loop for all the link tags and check for canonical rel values
+        #if the condition is met, then we print, there might be many href, not all are canonical values
         print("For the URL: " + str(url) + " Found the canonical URL value:", a['href'])
 
 
